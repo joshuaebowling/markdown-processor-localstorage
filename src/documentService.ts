@@ -18,17 +18,17 @@ const store = new Basil({
 
 const DocumentService: Services.IDocumentService = {
   find: (name: string) => {
-    const result = map(store.get(name), value => ({ name, value }));
+    const result = { name, contents: store.get(name) };
     return result;
   },
-  update: (item: Models.IDocument) => store.set(item.name, item.value),
+  update: (item: Models.IDocument) => store.set(item.name, item.contents),
   remove: (name: string) => {
     store.remove(name);
   },
   getNames: () => store.keys(),
-  createModel: ({ name, Documents }: Models.DocumentSet) => ({
+  createModel: ({ name, contents }: Models.IDocument) => ({
     name,
-    Documents
+    contents
   }),
   createModel: (id, answer, question) => ({ id, answer, question }),
   exportSets: () => {

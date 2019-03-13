@@ -2,7 +2,7 @@ declare namespace Models {
   interface IDocument {
     version: number; //
     name: string;
-    value: string;
+    contents: string;
   }
 }
 

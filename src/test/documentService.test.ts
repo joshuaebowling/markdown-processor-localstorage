@@ -7,6 +7,9 @@ const testData: object = {
   doc2: { name: "test2", contents: "test 2 value" }
 };
 describe("Document Service Tests", () => {
+  test("document service reset", () => {
+    //    DocumentService.reset();
+  });
   test("document service is a thing", () => {
     expect(typeof DocumentService).toBe("object");
   });
@@ -15,16 +18,24 @@ describe("Document Service Tests", () => {
     DocumentService.update(testData.doc1);
     const result: Models.IDocument = DocumentService.find(testData.doc1.name);
     expect(result.name).toBe("test1");
+    expect(result.contents).toBe(testData.doc1.contents);
   });
-  test("update doc1", () => {
-    testData.doc1.value = "new test 1 value";
+
+  test("updated a document", () => {
+    testData.doc1.contents = "new contents";
     DocumentService.update(testData.doc1);
-    expect(DocumentService.find(testData.doc1.name).contents).toBe(
-      testData.doc1.contents
-    );
+    const result: Models.IDocument = DocumentService.find(testData.doc1.name);
+    expect(result.contents).toBe("new contents");
   });
-  test("remove a doc1", () => {
+
+  test("getNames", () => {
+    const names: Array<string> = DocumentService.getNames();
+    expect(names.indexOf(testData.doc1.name)).toBeGreaterThan(-1);
+  });
+
+  test("remove a document", () => {
     DocumentService.remove(testData.doc1.name);
-    expect(DocumentService.find(testData.doc1.name)).toBe(null);
+    const names: Array<string> = DocumentService.getNames();
+    expect(names.indexOf(testData.doc1.name)).toBe(-1);
   });
 });
