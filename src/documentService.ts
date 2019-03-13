@@ -10,26 +10,18 @@ import {
   toObject
 } from "lodash";
 const store = new Basil({
-  namespace: "DocumentJumbler",
+  namespace: "MarkdownWordProcessor",
   storages: ["cookie", "local"],
   storage: "local",
   expireDays: 365
 });
 
-const DocumentStore = {};
-
-export const Document: Services.IDocument = {
+const DocumentService: Services.IDocumentService = {
   find: (name: string) => {
-    if (name === undefined) {
-      return collectionMap;
-    }
-    const result = map(JSON.parse(store.get(name)), qa =>
-      Document.createModel(qa.id, qa.answer, qa.question)
-    );
+    const result = map(store.get(name), value => ({ name, value }));
     return result;
   },
-  update: (item: Models.DocumentSet) =>
-    store.set(item.name, JSON.stringify(item.Documents)),
+  update: (item: Models.IDocument) => store.set(item.name, item.value),
   remove: (name: string) => {
     store.remove(name);
   },
@@ -77,5 +69,8 @@ export const Document: Services.IDocument = {
       }
     });
     return result;
-  }
+  },
+  reset: () => store.reset()
 };
+
+export default DocumentService;
