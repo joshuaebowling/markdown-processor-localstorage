@@ -12,6 +12,23 @@ declare namespace Infrastructure {
     availableDocuments: Array<string>; // a list of documents the user currently has on the screen
     currentDocument: Models.IDocument;
   }
+  interface IAction {
+    type: string;
+    payload: any;
+  }
+
+  interface Actions {
+    // TO MANAGE IState.openDocuments
+    ADD_OPEN_DOCUMENT_RQ: string;
+    REMOVE_OPEN_DOCUMENT_RQ: string;
+    OPEN_DOCUMENTS_CHANGED_RS: string; //THIS RESPONSE MAPS TO ADD/REMOVE DOCUMENT REQUESTS
+    // TO MANAGE IState.availableDocuments
+    SET_AVAILABLE_DOCUMENTS_RQ: string;
+    SET_AVAILABLE_DOCUMENTS_RS: string;
+    // TO MANAGE  IState.currentDocument
+    SET_CURRENT_DOCUMENT_RQ: string;
+    SET_CURRENT_DOCUMENT_RS: string;
+  }
 }
 
 declare namespace Services {

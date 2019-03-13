@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import "./styles.css";
+import reducer from "./reducer";
+import { Actions } from "./constants";
 
 function App() {
   return (
